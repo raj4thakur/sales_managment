@@ -117,6 +117,28 @@ page = st.sidebar.radio("Navigation", [
     "🎯 Demos", "🤝 Distributors", "🔍 File Viewer", "📤 Data Import", "📈 Reports"
 ], index=0)
 
+
+def show_basic_dashboard(db, analytics):
+    st.title("📊 Sales Dashboard")
+    
+    if db and analytics:
+        try:
+            sales_summary = analytics.get_sales_summary()
+            
+            col1, col2, col3, col4 = st.columns(4)
+            with col1:
+                st.metric("Total Sales", f"₹{sales_summary.get('total_sales', 0):,.0f}")
+            with col2:
+                st.metric("Pending Payments", f"₹{sales_summary.get('pending_amount', 0):,.0f}")
+            with col3:
+                st.metric("Total Transactions", sales_summary.get('total_transactions', 0))
+            with col4:
+                st.metric("Avg Sale", f"₹{sales_summary.get('avg_sale_value', 0):,.0f}")
+                
+        except Exception as e:
+            st.error(f"Error loading dashboard data: {e}")
+    else:
+        st.warning("Database or analytics not available")
 # Page routing with error handling
 try:
     if page == "📊 Dashboard":
@@ -188,24 +210,3 @@ st.sidebar.markdown("---")
 st.sidebar.info("🚀 Sales Management System v2.0")
 
 # Basic dashboard fallback
-def show_basic_dashboard(db, analytics):
-    st.title("📊 Sales Dashboard")
-    
-    if db and analytics:
-        try:
-            sales_summary = analytics.get_sales_summary()
-            
-            col1, col2, col3, col4 = st.columns(4)
-            with col1:
-                st.metric("Total Sales", f"₹{sales_summary.get('total_sales', 0):,.0f}")
-            with col2:
-                st.metric("Pending Payments", f"₹{sales_summary.get('pending_amount', 0):,.0f}")
-            with col3:
-                st.metric("Total Transactions", sales_summary.get('total_transactions', 0))
-            with col4:
-                st.metric("Avg Sale", f"₹{sales_summary.get('avg_sale_value', 0):,.0f}")
-                
-        except Exception as e:
-            st.error(f"Error loading dashboard data: {e}")
-    else:
-        st.warning("Database or analytics not available")
