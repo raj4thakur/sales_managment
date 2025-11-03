@@ -113,7 +113,7 @@ whatsapp_manager = st.session_state.whatsapp_manager
 st.sidebar.markdown("<h1 style='text-align: center;'>🚀 Sales Management</h1>", unsafe_allow_html=True)
 
 page = st.sidebar.radio("Navigation", [
-    "📊 Dashboard", "👥 Customers", "💰 Sales", "💳 Payments", 
+    "📊 Dashboard", "📊 System Dashboard", "👥 Customers", "💰 Sales", "💳 Payments", 
     "🎯 Demos", "🤝 Distributors", "🔍 File Viewer", "📤 Data Import", "📈 Reports"
 ], index=0)
 
@@ -148,6 +148,14 @@ try:
         except ImportError:
             st.error("Dashboard page not available. Creating basic dashboard...")
             show_basic_dashboard(db, analytics)
+
+    elif page == "📊 System Dashboard":
+        try:
+            from pages.system_dashboard import create_dashboard
+            create_dashboard(db, analytics)
+        except ImportError:
+            st.error("Dashboard page not available. Creating basic dashboard...")
+            show_basic_dashboard(db, analytics)        
     
     elif page == "👥 Customers":
         try:
@@ -203,8 +211,8 @@ except Exception as e:
     st.error(f"Application error: {e}")
     st.info("Please check the console for more details.")
 
-# Show database status in sidebar
-show_database_status(db)
+
+
 
 st.sidebar.markdown("---")
 st.sidebar.info("🚀 Sales Management System v2.0")
