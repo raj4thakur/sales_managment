@@ -1,4 +1,3 @@
-# main.py (Fixed version)
 import streamlit as st
 import os
 import sys
@@ -109,15 +108,27 @@ data_processor = st.session_state.data_processor
 analytics = st.session_state.analytics
 whatsapp_manager = st.session_state.whatsapp_manager
 
-# Sidebar navigation
-st.sidebar.markdown("<h1 style='text-align: center;'>🚀 Sales Management</h1>", unsafe_allow_html=True)
+# Add this in your main content area (before page routing)
+st.sidebar.markdown("""
+<div style='text-align: center; margin: 20px 0; margin-top:-10px'>
+    <img src='https://tse4.mm.bing.net/th/id/OIP.bvMgrnyDHrBdq_MmZeP8XgHaHa?rs=1&pid=ImgDetMain&o=7&rm=3' 
+         style='width: 200px; height: auto; margin-bottom: 10px;'>
+</div>
+""", unsafe_allow_html=True)
+st.sidebar.markdown("<h2 style='text-align: center;'>🚀 Sales Management</h2>", unsafe_allow_html=True)
 
 page = st.sidebar.radio("Navigation", [
     "📊 Dashboard", "👥 Customers", "💰 Sales", "💳 Payments", 
     "🎯 Demos", "🤝 Distributors", "🔍 File Viewer", "📤 Data Import", "📈 Reports"
 ], index=0)
 
+# app.py (add this)
+from sales_data_processor import SalesDataProcessor
 
+# Initialize in your main app
+if 'data_processor' not in st.session_state:
+    st.session_state.data_processor = SalesDataProcessor(db)
+    
 def show_basic_dashboard(db, analytics):
     st.title("📊 Sales Dashboard")
     
