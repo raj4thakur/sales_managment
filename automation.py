@@ -5,6 +5,8 @@ import smtplib
 from email.mime.text import MimeText
 from email.mime.multipart import MimeMultipart
 from datetime import datetime, timedelta
+from analytics import Analytics
+import os
 
 class AutomationManager:
     def __init__(self, db_manager, whatsapp_manager):

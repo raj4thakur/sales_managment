@@ -55,7 +55,7 @@ class EnhancedSalesManager:
         # Sales trends
         reports['sales_trends'] = pd.read_sql(f'''
         SELECT DATE(sale_date) as date, SUM(total_amount) as daily_sales,
-               SUM(total_liters) as daily_liters, COUNT(*) as transactions
+            SUM(total_liters) as daily_liters, COUNT(*) as transactions
         FROM sales
         WHERE sale_date BETWEEN '{start_date}' AND '{end_date}'
         GROUP BY DATE(sale_date)
@@ -65,7 +65,7 @@ class EnhancedSalesManager:
         # Product performance
         reports['product_performance'] = pd.read_sql(f'''
         SELECT p.packing_type, p.capacity_ltr, SUM(si.quantity) as total_quantity,
-               SUM(si.amount) as total_revenue, COUNT(DISTINCT s.sale_id) as transactions
+            SUM(si.amount) as total_revenue, COUNT(DISTINCT s.sale_id) as transactions
         FROM sale_items si
         JOIN products p ON si.product_id = p.product_id
         JOIN sales s ON si.sale_id = s.sale_id
