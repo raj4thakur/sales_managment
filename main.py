@@ -118,8 +118,8 @@ st.sidebar.markdown("""
 st.sidebar.markdown("<h2 style='text-align: center;'>🚀 Sales Management</h2>", unsafe_allow_html=True)
 
 page = st.sidebar.radio("Navigation", [
-    "📊 Dashboard", "📊 System Dashboard", "👥 Customers", "💰 Sales", "💳 Payments", 
-    "🎯 Demos", "🤝 Distributors", "🔍 File Viewer", "📤 Data Import", "📈 Reports"
+    "📊 System Dashboard", "👥 Customers", "💰 Sales", "💳 Payments", 
+    "🎯 Demos", "🤝 Distributors", "🔍 File Viewer", "📤 Data Import", "📊 Power BI Dashboard", "📈 Reports"
 ], index=0)
 
 # app.py (add this)
@@ -152,15 +152,7 @@ def show_basic_dashboard(db, analytics):
         st.warning("Database or analytics not available")
 # Page routing with error handling
 try:
-    if page == "📊 Dashboard":
-        try:
-            from pages.dashboard import create_dashboard
-            create_dashboard(db, analytics)
-        except ImportError:
-            st.error("Dashboard page not available. Creating basic dashboard...")
-            show_basic_dashboard(db, analytics)
-
-    elif page == "📊 System Dashboard":
+    if page == "📊 System Dashboard":
         try:
             from pages.system_dashboard import create_dashboard
             create_dashboard(db, analytics)
@@ -210,6 +202,13 @@ try:
             show_data_import_page(db, data_processor)
         except ImportError:
             st.error("Data Import page not available")
+    elif page == "📊 Power BI Dashboard":
+        try:
+            from pages.dashboard import create_dashboard
+            create_dashboard(db, analytics)
+        except ImportError:
+            st.error("Dashboard page not available. Creating basic dashboard...")
+            show_basic_dashboard(db, analytics)
     
     elif page == "📈 Reports":
         try:
