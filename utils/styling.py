@@ -5,16 +5,17 @@ def apply_custom_css():
     """Apply custom CSS styling"""
     st.markdown("""
     <style>
-                [data-testid="stSidebarNav"] {
+
+        [data-testid="stSidebarNav"] {
     display: none !important;
-}
-                
+    }
         .main-header {
             font-size: 2.5rem;
             color: #1f77b4;
             text-align: center;
             margin-bottom: 1rem;
         }
+                
         .metric-card {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             padding: 1rem;
